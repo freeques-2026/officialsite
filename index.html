@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社フリークス | FreeQues</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+    <style>
+        :root {
+            --primary-dark: #1E3143; /* 吹き抜ける風の深い蒼（ビジネスの信頼感） */
+            --accent-green: #7FA8C1; /* 標高の高い空の青（透明感と自由） */
+            --bg-light: #F2F6F9;    /* 乾いた空気の涼やかな白 */
+            --text-main: #2C3338;
+            --text-sub: #546672;
+            --border-color: rgba(30, 49, 67, 0.1);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            letter-spacing: 0.03em;
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Shippori Mincho', serif;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        section {
+            padding: 140px 0;
+        }
+
+        /* --- Components --- */
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background-color: var(--primary-dark);
+            color: #fff;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid var(--primary-dark);
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary-dark);
+        }
+
+        /* ヘッダー専用のコンタクトボタン */
+        .nav-links .btn-contact {
+            padding: 10px 25px;
+            background-color: var(--primary-dark);
+            color: #ffffff !important; 
+            border: 1px solid var(--primary-dark);
+            font-weight: 500;
+        }
+
+        .nav-links .btn-contact:hover {
+            background-color: #ffffff;
+            color: var(--primary-dark) !important;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 60px;
+            position: relative;
+            padding-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 1px;
+            background-color: var(--primary-dark);
+        }
+
+        /* --- Header (Visibility Fix for Scrolled state) --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999; /* Z-indexを最大級に設定し、確実に前面へ */
+            padding: 30px 0;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        /* スクロール時にProfileセクションの背景に負けないよう、完全に白背景にする */
+        header.scrolled {
+            background-color: #ffffff !important; /* 完全に不透明な白 */
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1); /* 浮き上がらせて視認性を確保 */
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--primary-dark);
+            letter-spacing: 0.2em;
+            transition: color 0.3s;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        /* スクロール時は、背景の白に対して文字がはっきり見えるように濃い蒼色に固定 */
+        header.scrolled .logo,
+        header.scrolled .nav-links a:not(.btn-contact) {
+            color: var(--primary-dark) !important;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-green);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(rgba(242, 246, 249, 0.6), rgba(242, 246, 249, 0.6)), 
+                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: var(--primary-dark);
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
+
+        .hero h1 span {
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            margin-bottom: 50px;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Concept --- */
+        .concept {
+            background-color: #fff;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .concept-text blockquote {
+            font-size: 1.6rem;
+            line-height: 2.2;
+            margin-bottom: 40px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* --- Services --- */
+        .service-category {
+            margin-bottom: 120px;
+        }
+
+        .service-category h3 {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 50px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-green);
+        }
+
+        .price {
+            display: block;
+            margin-top: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        /* --- Profile (DARK BACKGROUND) --- */
+        .profile {
+            background-color: var(--primary-dark);
+            color: #fff;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 80px;
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            padding-left: 30px;
+            border-left: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 100px 0;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .omamori i {
+            color: var(--accent-green);
+            margin-bottom: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 2.4rem; }
+            .concept-grid, .profile-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">FreeQues</a>
+                <div class="nav-links">
+                    <a href="#concept">Concept</a>
+                    <a href="#services">Services</a>
+                    <a href="#profile">Profile</a>
+                    <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn btn-contact">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    <span>すべての人が自分の内にある、</span><br>
+                    <span>気づいていない可能性や選択に気づく。</span>
+                </h1>
+                <p>視界が開ける。勇気が湧く。一歩を踏み出す。<br>ここは、自分自身を再定義するための場所。</p>
+                <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn">体験セッションを予約する</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="concept" id="concept">
+        <div class="container">
+            <div class="concept-grid">
+                <div class="concept-image">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1000" alt="標高の高い場所" style="width: 100%; border-radius: 0 150px 0 150px;">
+                </div>
+                <div class="concept-text">
+                    <h2 class="section-title">標高の高い場所で、<br>呼吸を整える。</h2>
+                    <blockquote>
+                        一見、風変わり（Freak）な選択が、<br>
+                        未来の自由（Free）と<br>
+                        固有性（Unique）を切り拓く。
+                    </blockquote>
+                    <p>
+                        山を登りきり、視界がいきなり開ける。乾いた初夏の風が吹き抜ける。<br>
+                        そんな非日常の空間でこそ、見えてくる「本当の自分」があります。
+                        FreeQuesは、現場と経営を繋ぐ確かな戦略と、内発的な活力を引き出すコーチングを融合。
+                        あなたが「自分らしく在りながら、成果を出す」ための共創型パートナーです。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Services</h2>
+            
+            <div class="service-category">
+                <h3><i data-lucide="line-chart"></i> Marketing Consulting</h3>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h4>マーケティング共創支援</h4>
+                        <p>現場と経営をつなぎ、顧客データを起点とした共創型マーケティングを支援。</p>
+                        <span class="price">300,000円〜 / 月</span>
+                    </div>
+                    <div class="service-card">
+                        <h4>マーケティング思考 開発研修</h4>
+                        <p>組織全体でマーケティング視点を持ち、自走できる基盤を構築します。</p>
+                        <span class="price">200,000円〜 / 回</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3><i data-lucide="users"></i> Fusion Support</h3>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h4>マーケティング人財開発支援</h4>
+                        <p>専門スキルとコーチングを掛け合わせ、個と組織の活力を最大化します。</p>
+                        <span class="price">500,000円〜 / 月</span>
+                    </div>
+                    <div class="service-card">
+                        <h4>自走型組織開発支援</h4>
+                        <p>対話を通じて組織風土を改革し、持続的な成長を支援します。</p>
+                        <span class="price">500,000円〜 / 月</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3><i data-lucide="compass"></i> Personal Coaching</h3>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h4>体験セッション (60分)</h4>
+                        <p>まずはあなたの想いをお聞かせください。可能性を拓く「問い」を届けます。</p>
+                        <span class="price">無料</span>
+                    </div>
+                    <div class="service-card">
+                        <h4>継続セッション</h4>
+                        <p>オンライン, または対面（都内近郊）にて、対話を通じた変革を継続します。</p>
+                        <span class="price">11,000円〜 / 回</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile" id="profile">
+        <div class="container">
+            <div class="profile-grid">
+                <div class="profile-intro">
+                    <h2 class="section-title" style="color:#fff;">Profile</h2>
+                    <p>
+                        広告代理店・商業施設・外資系コンサルティングなど多様な立場で、現場と経営をつなぐマーケティングに従事。
+                    </p>
+                    <p>
+                        パルコデジタルマーケティングでは、JFRグループを中心に顧客データ起点のマーケティング共創支援を担当。 2024年11月に独立し、2026年2月に株式会社フリークスを設立。
+                    </p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">2026.02 - Present</span>
+                        <h4>株式会社フリークス 設立</h4>
+                        <p>コンサルティングとコーチングを融合した共創型支援を展開。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2024.11 - 2026.01</span>
+                        <h4>オフィスフリークス（個人事業主）</h4>
+                        <p>大手百貨店やアパレル企業のマーケティング戦略・PMO業務を支援。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2019.09 - 2024.10</span>
+                        <h4>株式会社パルコデジタルマーケティング</h4>
+                        <p>JFRデータ活用チーム等と連携し, CRM戦略・OMO視点でのデジタルマーケティングを推進。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">EARLIER CAREER</span>
+                        <h4>多様な現場とマーケティングの経験</h4>
+                        <p>マザーハウス、IMJ、アトレ、オックスプランニング等で多角的な視点を養う。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="omamori">
+                <i data-lucide="shield-check" size="48"></i>
+                <h3 class="font-serif" style="font-size: 1.5rem; margin-bottom: 20px;">しんどくなった時には、いつでも戻ってきてください。</h3>
+                <p style="margin-bottom: 40px; color: var(--text-sub);">
+                    ここは、あなたの勇気を守り、確信へと変えるための場所です。
+                </p>
+                <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn">お問い合わせはこちら</a>
+                <p style="margin-top: 80px; font-size: 0.75rem; opacity: 0.5;">&copy; 2026 FreeQues Co., Ltd. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // ヘッダーのスクロール判定
+        const handleHeader = () => {
+            const header = document.getElementById('header');
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // 閾値を小さくし、スクロール開始後すぐに白背景を適用するように設定
+            if (scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        };
+
+        window.addEventListener('scroll', handleHeader);
+        window.addEventListener('load', handleHeader); // ページ更新時にも判定
+
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith("#")) {
+                    e.preventDefault();
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
