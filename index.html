@@ -10,12 +10,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
     <style>
         :root {
-            --primary-dark: #1E3143; /* 吹き抜ける風の深い蒼（ビジネスの信頼感） */
-            --accent-green: #7FA8C1; /* 標高の高い空の青（透明感と自由） */
-            --bg-light: #F2F6F9;    /* 乾いた空気の涼やかな白 */
+            --primary-dark: #12284C; /* 群青色 */
+            --accent-green: #4169E1; /* ロイヤルブルー */
+            --bg-light: #F2F6F9;
             --text-main: #2C3338;
             --text-sub: #546672;
-            --border-color: rgba(30, 49, 67, 0.1);
+            --border-color: rgba(18, 40, 76, 0.1);
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -38,7 +38,6 @@
             font-family: 'Shippori Mincho', serif;
         }
 
-        /* --- Layout --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -49,7 +48,6 @@
             padding: 140px 0;
         }
 
-        /* --- Components --- */
         .btn {
             display: inline-block;
             padding: 16px 40px;
@@ -69,7 +67,6 @@
             color: var(--primary-dark);
         }
 
-        /* ヘッダー専用のコンタクトボタン */
         .nav-links .btn-contact {
             padding: 10px 25px;
             background-color: var(--primary-dark);
@@ -101,24 +98,23 @@
             background-color: var(--primary-dark);
         }
 
-        /* --- Header (Visibility Fix for Scrolled state) --- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 9999; /* Z-indexを最大級に設定し、確実に前面へ */
-            padding: 30px 0;
+            z-index: 9999;
+            padding: 25px 0;
             transition: var(--transition);
-            background: transparent;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(18, 40, 76, 0.1);
         }
 
-        /* スクロール時にProfileセクションの背景に負けないよう、完全に白背景にする */
         header.scrolled {
-            background-color: #ffffff !important; /* 完全に不透明な白 */
             padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.1); /* 浮き上がらせて視認性を確保 */
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
         }
 
         nav {
@@ -133,7 +129,6 @@
             text-decoration: none;
             color: var(--primary-dark);
             letter-spacing: 0.2em;
-            transition: color 0.3s;
         }
 
         .nav-links {
@@ -147,12 +142,7 @@
             color: var(--text-main);
             font-size: 0.9rem;
             transition: color 0.3s;
-        }
-
-        /* スクロール時は、背景の白に対して文字がはっきり見えるように濃い蒼色に固定 */
-        header.scrolled .logo,
-        header.scrolled .nav-links a:not(.btn-contact) {
-            color: var(--primary-dark) !important;
+            font-weight: 500;
         }
 
         .nav-links a:hover {
@@ -167,37 +157,48 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            background: linear-gradient(rgba(242, 246, 249, 0.6), rgba(242, 246, 249, 0.6)), 
-                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
+            overflow: hidden;
+            background-color: var(--bg-light);
+            background-image: 
+                linear-gradient(135deg, transparent 40%, rgba(65, 105, 225, 0.05) 50%, transparent 60%),
+                linear-gradient(225deg, transparent 40%, rgba(65, 105, 225, 0.05) 50%, transparent 60%),
+                linear-gradient(to bottom, #ffffff 0%, var(--bg-light) 100%);
+            background-size: cover;
+            background-attachment: fixed;
         }
 
         .hero-content {
             z-index: 10;
-            max-width: 900px;
-            padding: 0 20px;
+            max-width: 1000px;
         }
 
         .hero h1 {
             font-size: 3.2rem;
             line-height: 1.6;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             color: var(--primary-dark);
-            word-break: keep-all;
-            overflow-wrap: break-word;
         }
 
         .hero h1 span {
             display: inline-block;
+            white-space: nowrap;
+        }
+
+        .hero-line {
+            width: 80px;
+            height: 1px;
+            background-color: var(--accent-green);
+            margin: 40px auto;
+            transform-origin: center;
         }
 
         .hero p {
-            font-size: 1.25rem;
-            color: var(--text-sub);
-            margin-bottom: 50px;
-            letter-spacing: 0.05em;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            line-height: 2;
         }
 
-        /* --- Concept --- */
+        /* --- Concept & Image --- */
         .concept {
             background-color: #fff;
         }
@@ -207,6 +208,18 @@
             grid-template-columns: 1fr 1fr;
             gap: 100px;
             align-items: center;
+        }
+
+        .concept-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: var(--bg-light);
+            border-radius: 0 150px 0 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .concept-text blockquote {
@@ -233,7 +246,7 @@
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: 1fr;
             gap: 40px;
         }
 
@@ -244,20 +257,36 @@
             transition: var(--transition);
         }
 
+        .service-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .service-card p {
+            margin-bottom: 20px;
+        }
+
+        .service-card .feature-list {
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            margin-bottom: 25px;
+        }
+
+        .feature-item h5 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+        }
+
         .service-card:hover {
             transform: translateY(-10px);
             border-color: var(--accent-green);
         }
 
-        .price {
-            display: block;
-            margin-top: 25px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--accent-green);
-        }
-
-        /* --- Profile (DARK BACKGROUND) --- */
+        /* --- Profile --- */
         .profile {
             background-color: var(--primary-dark);
             color: #fff;
@@ -269,29 +298,115 @@
             gap: 80px;
         }
 
-        .timeline-item {
-            margin-bottom: 50px;
-            padding-left: 30px;
-            border-left: 1px solid rgba(255,255,255,0.2);
-            position: relative;
+        .profile-img-container {
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            border-radius: 0 100px 0 100px;
+            background: #fff;
         }
 
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -5px;
-            top: 5px;
-            width: 9px;
-            height: 9px;
-            background-color: var(--accent-green);
-            border-radius: 50%;
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
         }
 
-        .timeline-date {
-            font-size: 0.85rem;
+        .profile-bio p {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 2;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* --- Note Section --- */
+        .note-section {
+            background-color: #fff;
+        }
+
+        .note-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .note-card {
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .note-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+        }
+
+        .note-content {
+            padding: 25px;
+        }
+
+        .note-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            line-height: 1.6;
+        }
+
+        .note-card .date {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        /* --- FAQ --- */
+        .faq {
+            background-color: var(--bg-light);
+        }
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .faq-question {
+            width: 100%;
+            padding: 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-family: 'Noto Sans JP', sans-serif;
+            transition: var(--transition);
+        }
+        .faq-question:hover {
             color: var(--accent-green);
-            margin-bottom: 8px;
-            display: block;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: var(--text-sub);
+        }
+        .faq-answer-inner {
+            padding-bottom: 25px;
+        }
+        .faq-question i {
+            transition: transform 0.3s;
+            color: var(--accent-green);
+        }
+        .faq-question.active i {
+            transform: rotate(180deg);
         }
 
         /* --- Footer --- */
@@ -306,10 +421,10 @@
             margin-bottom: 30px;
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
-            .hero h1 { font-size: 2.4rem; }
+            .hero h1 { font-size: 2.2rem; }
             .concept-grid, .profile-grid { grid-template-columns: 1fr; }
+            .profile-img-container { height: 400px; }
         }
     </style>
 </head>
@@ -320,9 +435,10 @@
             <nav>
                 <a href="#" class="logo">FreeQues</a>
                 <div class="nav-links">
-                    <a href="#concept">Concept</a>
+                    <a href="#concept">About</a>
                     <a href="#services">Services</a>
                     <a href="#profile">Profile</a>
+                    <a href="#note">Insights</a>
                     <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn btn-contact">Contact</a>
                 </div>
             </nav>
@@ -334,10 +450,13 @@
             <div class="hero-content">
                 <h1>
                     <span>すべての人が自分の内にある、</span><br>
-                    <span>気づいていない可能性や選択に気づく。</span>
+                    <span>無限の可能性や選択肢に気づく。</span>
                 </h1>
-                <p>視界が開ける。勇気が湧く。一歩を踏み出す。<br>ここは、自分自身を再定義するための場所。</p>
-                <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn">体験セッションを予約する</a>
+                <div class="hero-line"></div>
+                <p>
+                    戦略に「熱」を、組織に「自由」を。<br>
+                    経営の限界を遊び心で突破し、固有の価値を最大化する。
+                </p>
             </div>
         </div>
     </section>
@@ -346,20 +465,18 @@
         <div class="container">
             <div class="concept-grid">
                 <div class="concept-image">
-                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1000" alt="標高の高い場所" style="width: 100%; border-radius: 0 150px 0 150px;">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000" alt="無限の可能性が生まれるイメージ" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="concept-text">
-                    <h2 class="section-title">標高の高い場所で、<br>呼吸を整える。</h2>
+                    <h2 class="section-title">about US</h2>
                     <blockquote>
-                        一見、風変わり（Freak）な選択が、<br>
+                        一見, 風変わり（Freak）な選択が,<br>
                         未来の自由（Free）と<br>
                         固有性（Unique）を切り拓く。
                     </blockquote>
                     <p>
-                        山を登りきり、視界がいきなり開ける。乾いた初夏の風が吹き抜ける。<br>
-                        そんな非日常の空間でこそ、見えてくる「本当の自分」があります。
-                        FreeQuesは、現場と経営を繋ぐ確かな戦略と、内発的な活力を引き出すコーチングを融合。
-                        あなたが「自分らしく在りながら、成果を出す」ための共創型パートナーです。
+                        「ここが限界だ」と思い込んでいる境界線を、遊び心すら感じるような「軽やかさ」で越えていく。かつての私は、本質的な成果のために「強い覚悟」を強いることが唯一の道だと信じてきました。しかし、真の変容は、孤独な闘いではなく、互いの変化を称賛しあえる土壌の中でこそ生まれます。<br><br>
+                        FreeQuesは、培ってきた戦略的な「厳しさ」と、新たに手にした「しなやかさ」を統合。あなたが自分の中にある無限の可能性に気づき、コーチングを「生き方の指針」として深く人生に根付かせるための、共創型パートナーです。
                     </p>
                 </div>
             </div>
@@ -371,49 +488,48 @@
             <h2 class="section-title">Services</h2>
             
             <div class="service-category">
-                <h3><i data-lucide="line-chart"></i> Marketing Consulting</h3>
+                <h3><i data-lucide="line-chart"></i> マーケティングコンサルティング</h3>
                 <div class="service-grid">
                     <div class="service-card">
-                        <h4>マーケティング共創支援</h4>
-                        <p>現場と経営をつなぎ、顧客データを起点とした共創型マーケティングを支援。</p>
-                        <span class="price">300,000円〜 / 月</span>
-                    </div>
-                    <div class="service-card">
-                        <h4>マーケティング思考 開発研修</h4>
-                        <p>組織全体でマーケティング視点を持ち、自走できる基盤を構築します。</p>
-                        <span class="price">200,000円〜 / 回</span>
+                        <h4>「成果」と「活力」を両立する、顧客起点のマーケティング実装</h4>
+                        <p>現場が顧客への貢献を実感し、自律的に動き出す。単なる戦略立案にとどまらず、組織の中に確かな手応えと「活力」が生まれるマーケティング構造を共に創り上げます。</p>
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <h5>1. 顧客起点の戦略デザイン（LTVの最大化）</h5>
+                                <p>独自の「勝てるシナリオ」を構築。新規獲得から顧客育成まで、各フェーズにおける満足度とLTVを最大化させる具体的な施策を設計します。</p>
+                            </div>
+                            <div class="feature-item">
+                                <h5>2. 経営と現場を繋ぐKPIの構造化（戦略の浸透）</h5>
+                                <p>抽象的な戦略を具体的なアクションへ翻訳。現場が迷いなく追える指標（顧客KPI・施策KPI）として落とし込み、組織全体の推進力を高めます。</p>
+                            </div>
+                            <div class="feature-item">
+                                <h5>3. 組織の自走を促す「対話型」支援（リテラシーの定着）</h5>
+                                <p>対話を重視したプロセスを構築。組織内のリテラシーを底上げし、自社の強みを活かした戦略を「自分たちの力」で実行・改善し続けられる状態へと導きます。</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="service-category">
-                <h3><i data-lucide="users"></i> Fusion Support</h3>
+                <h3><i data-lucide="compass"></i> コーチング</h3>
                 <div class="service-grid">
                     <div class="service-card">
-                        <h4>マーケティング人財開発支援</h4>
-                        <p>専門スキルとコーチングを掛け合わせ、個と組織の活力を最大化します。</p>
-                        <span class="price">500,000円〜 / 月</span>
-                    </div>
-                    <div class="service-card">
-                        <h4>自走型組織開発支援</h4>
-                        <p>対話を通じて組織風土を改革し、持続的な成長を支援します。</p>
-                        <span class="price">500,000円〜 / 月</span>
+                        <h4>Beyond the Correctness: 「願い」という新たな選択軸を。</h4>
+                        <p>正解のない時代において、世の中の「正しさ」だけを基準にすることは、自らの可能性を制限することかもしれません。</p>
+                        <p>自分の内側にある「願い」を選択肢に加える。その柔軟な視点が、眠っていた感性を呼び覚まし、能力の「新しい使い方」をデザインします。既成の枠に収まるのではなく、自身のリソースを自由に采配し、理想の未来を自ら構築していく。私たちが目指すのは、そんな「自己の可能性を広げ続ける」コーチングです。</p>
+                        <p><strong>体験セッション(１時間)：無料</strong></p>
                     </div>
                 </div>
             </div>
 
             <div class="service-category">
-                <h3><i data-lucide="compass"></i> Personal Coaching</h3>
+                <h3><i data-lucide="zap"></i> コンサル×コーチング共創</h3>
                 <div class="service-grid">
                     <div class="service-card">
-                        <h4>体験セッション (60分)</h4>
-                        <p>まずはあなたの想いをお聞かせください。可能性を拓く「問い」を届けます。</p>
-                        <span class="price">無料</span>
-                    </div>
-                    <div class="service-card">
-                        <h4>継続セッション</h4>
-                        <p>オンライン, または対面（都内近郊）にて、対話を通じた変革を継続します。</p>
-                        <span class="price">11,000円〜 / 回</span>
+                        <h4>「正解」を追う組織から、「価値」を創り続ける集団へ</h4>
+                        <p>変化の激しい時代、外部環境に合わせただけの戦略はすぐに形骸化します。今、組織に必要なのは、確かな勝算を裏付ける「論理的アプローチ」と、メンバーが心の底から動きたくなる「内発的な動機」の融合です。</p>
+                        <p>コンサルティングによって市場の機微を捉えた「勝てる地図」を描き、コーチングによって組織の「ありたい姿」を明確にする。この二つが重なったとき、義務感（Have to）ではない、自発的な共創（Want to）が動き出します。既存の枠組みを超え、関わる全員の知恵と感性が混ざり合う、創造的な組織文化を実装していきます。</p>
                     </div>
                 </div>
             </div>
@@ -422,36 +538,120 @@
 
     <section class="profile" id="profile">
         <div class="container">
-            <div class="profile-grid">
-                <div class="profile-intro">
-                    <h2 class="section-title" style="color:#fff;">Profile</h2>
+            <h2 class="section-title" style="color:#fff;">Profile</h2>
+            <div class="profile-grid" style="grid-template-columns: 1fr;">
+                <div class="profile-bio">
+                    <h3 style="color:#fff; margin-bottom: 30px; font-size: 1.8rem;">代表取締役 長 勇樹</h3>
                     <p>
-                        広告代理店・商業施設・外資系コンサルティングなど多様な立場で、現場と経営をつなぐマーケティングに従事。
+                        2002年、イオングループの株式会社ブルーグラスに入社。店舗運営および本社での店舗開発業務に従事した後、広告企画会社での営業職を経て、2010年より株式会社アトレに参画。現場の運営サポートから本社マーケティング戦略室でのデータ活用、全社デジタル・インバウンド戦略の立案・推進まで幅広く担う。
                     </p>
                     <p>
-                        パルコデジタルマーケティングでは、JFRグループを中心に顧客データ起点のマーケティング共創支援を担当。 2024年11月に独立し、2026年2月に株式会社フリークスを設立。
+                        2019年からは、株式会社アイ・エム・ジェイにてチーフコンサルタントとして小売・メーカーのデジタル支援に従事。その後、株式会社パルコデジタルマーケティングにて、OMO視点でのマーケティング支援や、大手百貨店のDX推進・CRM戦略・KPI設計等のプロジェクトをマネジメント。また、株式会社マザーハウスでは実店舗での接客からプロモーション、店舗開発などを経験。
+                    </p>
+                    <p>
+                        こうした一貫したキャリアの中で「人が本来持つ活力」や「対話による共創」の重要性を痛感し、Co-Active®コーチングの門を叩く。2025年11月には、基礎・応用コース計104時間のプロセスを完了。現在は上級コースへの挑戦を続けながら、100人サンプルセッションなどの活動を通じ、対話の可能性を磨き続けている。
+                    </p>
+                    <p>
+                        2024年11月に「オフィスフリークス」として独立。2026年2月には「株式会社フリークス」を設立。「コンサルティング×コーチング」を軸に、単なる戦略立案に留まらず、組織の中に「共創」を生み出し、関わる人々が自律的に動き出すための伴走支援を行っている。
                     </p>
                 </div>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <span class="timeline-date">2026.02 - Present</span>
-                        <h4>株式会社フリークス 設立</h4>
-                        <p>コンサルティングとコーチングを融合した共創型支援を展開。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="note-section" id="note">
+        <div class="container">
+            <h2 class="section-title">Insights from note</h2>
+            <div class="note-grid">
+                <a href="https://note.com/yukicho0330" target="_blank" class="note-card">
+                    <div class="note-content">
+                        <span class="date">LATEST ARTICLE 01</span>
+                        <h4>「コンサル×コーチング」が組織にもたらす、数値化できない爆発力について</h4>
                     </div>
-                    <div class="timeline-item">
-                        <span class="timeline-date">2024.11 - 2026.01</span>
-                        <h4>オフィスフリークス（個人事業主）</h4>
-                        <p>大手百貨店やアパレル企業のマーケティング戦略・PMO業務を支援。</p>
+                </a>
+                <a href="https://note.com/yukicho0330" target="_blank" class="note-card">
+                    <div class="note-content">
+                        <span class="date">LATEST ARTICLE 02</span>
+                        <h4>100人サンプルセッションを通じて見えてきた、リーダーたちの「静かな情熱」</h4>
                     </div>
-                    <div class="timeline-item">
-                        <span class="timeline-date">2019.09 - 2024.10</span>
-                        <h4>株式会社パルコデジタルマーケティング</h4>
-                        <p>JFRデータ活用チーム等と連携し, CRM戦略・OMO視点でのデジタルマーケティングを推進。</p>
+                </a>
+                <a href="https://note.com/yukicho0330" target="_blank" class="note-card">
+                    <div class="note-content">
+                        <span class="date">LATEST ARTICLE 03</span>
+                        <h4>顧客起点の戦略を「自分たちのもの」にするための、対話の技術</h4>
                     </div>
-                    <div class="timeline-item">
-                        <span class="timeline-date">EARLIER CAREER</span>
-                        <h4>多様な現場とマーケティングの経験</h4>
-                        <p>マザーハウス、IMJ、アトレ、オックスプランニング等で多角的な視点を養う。</p>
+                </a>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="https://note.com/yukicho0330" target="_blank" class="btn">すべての記事を読む</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">FAQ</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        どのような相談が可能ですか？
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            経営戦略やマーケティングの仕組みづくり（コンサルティング）から、リーダーシップや自己変容（コーチング）、あるいはその両方を掛け合わせた組織開発まで幅広く対応しています。個人の方のキャリア相談から、法人様の事業成長支援まで、状況に合わせて最適な伴走スタイルをご提案します。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        アパレルや商業施設以外の業種でも相談可能ですか？
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            はい、可能です。代表は百貨店、アパレル、広告代理店、ITコンサルティングなど多角的な視点を養ってきましたが、本質的な「顧客視点のマーケティング」と「個の可能性を引き出す対話」は業種を問わず適用可能です。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        コンサルティングとコーチング、どちらを依頼すれば良いか迷っています。
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            多くの課題は両者が複雑に絡み合っています。まずはContact（お問い合わせ）より現状をお聞かせください。現在の課題が「戦略や仕組み」にあるのか、「マインドセットや組織風土」にあるのか、あるいはその両方なのかを共に紐解き、最適なプランをご提案します。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        体験セッション（サンプルセッション）は誰でも受けられますか？
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p style="margin-bottom:15px;">はい。個人・法人を問わず、コーチングを通じた「変容」を体験してみたい方であれば、どなたでも1回無料で受けていただけます。</p>
+                            <p style="margin-bottom:10px;">・個人の方： キャリアの転機や、自身の「あり方」を深く探究したいときにご活用ください。</p>
+                            <p style="margin-bottom:15px;">・法人様： 特に新規事業部門の立ち上げ期や、既存のフレームワークでは限界を感じている際の「視点の拡張」に非常に有効です。チームメンバーお一人ずつ、それぞれの視点から可能性を広げる場としてご活用いただけます。</p>
+                            <p>なお、コーチング体験ではなく、マーケティングコンサルティングや組織開発支援の具体的なご相談、サービス内容の詳しい解説をご希望の場合は、Contactフォームよりお問い合わせください。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ビジネスの戦略に「遊び心」や「軽やかさ」は本当に必要でしょうか？
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            はい。強烈な「覚悟」や「厳しさ」だけでは、境界線を越える際に行き詰まることがあります。私たちは、遊び心すら感じる「軽やかさ」こそが、限界を突破し、本質的な変化を遂げるための強力なエンジンになると信じています。
+                        </div>
                     </div>
                 </div>
             </div>
@@ -462,9 +662,12 @@
         <div class="container">
             <div class="omamori">
                 <i data-lucide="shield-check" size="48"></i>
-                <h3 class="font-serif" style="font-size: 1.5rem; margin-bottom: 20px;">しんどくなった時には、いつでも戻ってきてください。</h3>
-                <p style="margin-bottom: 40px; color: var(--text-sub);">
-                    ここは、あなたの勇気を守り、確信へと変えるための場所です。
+                <h3 class="font-serif" style="font-size: 1.5rem; margin-bottom: 20px;">
+                    ビジネスの戦略に、人を動かす活力を。<br>
+                    迷いが生じたとき、いつでも思考を整えにいらしてください。
+                </h3>
+                <p style="margin-bottom: 40px; color: var(--text-sub); max-width: 700px; margin-left: auto; margin-right: auto;">
+                    ここは、あなたの「想い」を整理し、確かな「次の一歩」へと変える場所です。
                 </p>
                 <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn">お問い合わせはこちら</a>
                 <p style="margin-top: 80px; font-size: 0.75rem; opacity: 0.5;">&copy; 2026 FreeQues Co., Ltd. All Rights Reserved.</p>
@@ -473,38 +676,61 @@
     </footer>
 
     <script>
-        lucide.createIcons();
-
-        // ヘッダーのスクロール判定
-        const handleHeader = () => {
-            const header = document.getElementById('header');
-            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            
-            // 閾値を小さくし、スクロール開始後すぐに白背景を適用するように設定
-            if (scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+        window.addEventListener('load', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
-        };
 
-        window.addEventListener('scroll', handleHeader);
-        window.addEventListener('load', handleHeader); // ページ更新時にも判定
-
-        // スムーススクロール
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                if (targetId.startsWith("#")) {
-                    e.preventDefault();
-                    const target = document.querySelector(targetId);
-                    if (target) {
-                        window.scrollTo({
-                            top: target.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
+            const handleHeader = () => {
+                const header = document.getElementById('header');
+                const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
                 }
+            };
+            window.addEventListener('scroll', handleHeader);
+            handleHeader();
+
+            // Hero line scroll animation
+            window.addEventListener('scroll', () => {
+                const line = document.querySelector('.hero-line');
+                const scroll = window.pageYOffset;
+                if (line) {
+                    line.style.transform = `scaleX(${1 + scroll / 500})`;
+                    line.style.opacity = 1 - scroll / 400;
+                }
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith("#")) {
+                        e.preventDefault();
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            window.scrollTo({
+                                top: target.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', () => {
+                    const faqAnswer = button.nextElementSibling;
+                    const isActive = button.classList.contains('active');
+                    if (!isActive) {
+                        button.classList.add('active');
+                        faqAnswer.style.maxHeight = faqAnswer.scrollHeight + "px";
+                    } else {
+                        button.classList.remove('active');
+                        faqAnswer.style.maxHeight = "0px";
+                    }
+                });
             });
         });
     </script>
