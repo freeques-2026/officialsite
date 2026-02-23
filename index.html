@@ -124,11 +124,21 @@
         }
 
         .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
+            display: block;
+            width: 150px;
+            height: 40px;
+            position: relative;
+            overflow: hidden;
             text-decoration: none;
-            color: var(--primary-dark);
-            letter-spacing: 0.2em;
+        }
+
+        .logo img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 240%; /* 画像の余白を飛ばして文字のみを表示するために拡大 */
+            transform: translate(-50%, -50%);
+            mix-blend-mode: multiply; /* 白背景を透過 */
         }
 
         .nav-links {
@@ -421,10 +431,188 @@
             margin-bottom: 30px;
         }
 
+        /* --- Services Accordion (Mobile Only) --- */
+        .btn-more {
+            display: none;
+        }
+
+        /* ==========================================
+           追加・修正用クラス (PC表示は元のスタイルを維持)
+           ========================================== */
+        .footer-msg-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .footer-msg-desc {
+            margin-bottom: 40px;
+            color: var(--text-sub);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .keep-together {
+            display: inline-block;
+        }
+        
+        /* 今回追加したPC非表示用の改行クラス */
+        .sp-br {
+            display: none;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+            padding: 0;
+        }
+        .hamburger span {
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-dark);
+            transition: all 0.3s ease-in-out;
+            border-radius: 2px;
+        }
+
         @media (max-width: 1024px) {
             .hero h1 { font-size: 2.2rem; }
             .concept-grid, .profile-grid { grid-template-columns: 1fr; }
             .profile-img-container { height: 400px; }
+        }
+
+        @media (max-width: 768px) {
+            .service-details {
+                max-height: 120px;
+                overflow: hidden;
+                transition: max-height 0.6s ease;
+                position: relative;
+            }
+            .service-details.is-open {
+                max-height: 2000px; /* 十分な高さを確保して確実に開くように修正 */
+            }
+            .service-details::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+                pointer-events: none;
+                transition: opacity 0.4s ease-out;
+            }
+            .service-details.is-open::after {
+                opacity: 0;
+            }
+            .service-details-inner {
+                padding-top: 15px;
+                padding-bottom: 20px;
+            }
+            .btn-more {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px;
+                background: none;
+                border: none;
+                color: var(--accent-green);
+                font-size: 0.95rem;
+                cursor: pointer;
+                transition: var(--transition);
+                font-family: 'Noto Sans JP', sans-serif;
+                font-weight: 600;
+            }
+            .btn-more:hover {
+                opacity: 0.7;
+            }
+            .btn-more .text-close {
+                display: none;
+            }
+            .btn-more.active .text-more {
+                display: none;
+            }
+            .btn-more.active .text-close {
+                display: inline;
+            }
+            .btn-more i {
+                transition: transform 0.3s;
+            }
+            .btn-more.active i {
+                transform: rotate(180deg);
+            }
+
+            /* -------------------------------------
+               スマホ専用の修正（ご要望部分）
+               ------------------------------------- */
+
+            /* スマホ時のみ有効になる改行と折り返し防止 */
+            .sp-br {
+                display: inline;
+            }
+            .sp-keep {
+                display: inline-block;
+            }
+
+            /* Aboutの泣き別れ防止のために文字サイズを少し調整 */
+            .concept-text blockquote {
+                font-size: 1.15rem;
+            }
+
+            /* ②ヒーローエリアの見切れ調整 */
+            .hero h1 {
+                font-size: 1.5rem; /* スマホサイズに合わせて縮小 */
+            }
+            .hero h1 span {
+                white-space: normal; /* 見切れないように自動改行を許可 */
+            }
+
+            /* ③ヘッダーのハンバーガーメニュー化 */
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 250px;
+                height: 100vh;
+                background-color: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transition: right 0.3s ease-in-out;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+            }
+            .nav-links.nav-active {
+                right: 0;
+            }
+            /* ハンバーガーアイコンのアニメーション */
+            .hamburger.toggle span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .hamburger.toggle span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.toggle span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            /* ①フッター文章の左揃えと「のを。」泣き別れ調整 */
+            .footer-msg-title, .footer-msg-desc {
+                text-align: left;
+            }
+            .footer-msg-title {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
@@ -433,7 +621,14 @@
     <header id="header">
         <div class="container">
             <nav>
-                <a href="#" class="logo">FreeQues</a>
+                <a href="#" class="logo">
+                    <img src="logo.png" alt="FreeQues">
+                </a>
+                <button class="hamburger" aria-label="メニュー">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <div class="nav-links">
                     <a href="#concept">About</a>
                     <a href="#services">Services</a>
@@ -455,7 +650,7 @@
                 <div class="hero-line"></div>
                 <p>
                     戦略に「熱」を、組織に「自由」を。<br>
-                    経営の限界を遊び心で突破し、固有の価値を最大化する。
+                    経営の限界を遊び心で突破し、<br class="sp-br">固有の価値を最大化する。
                 </p>
             </div>
         </div>
@@ -470,9 +665,9 @@
                 <div class="concept-text">
                     <h2 class="section-title">about US</h2>
                     <blockquote>
-                        一見, 風変わり（Freak）な選択が,<br>
-                        未来の自由（Free）と<br>
-                        固有性（Unique）を切り拓く。
+                        <span class="sp-keep">一見, 風変わり（Freak）な選択が,</span><br>
+                        <span class="sp-keep">未来の自由（Free）と</span><br>
+                        <span class="sp-keep">固有性（Unique）を切り拓く。</span>
                     </blockquote>
                     <p>
                         「ここが限界だ」と思い込んでいる境界線を、遊び心すら感じるような「軽やかさ」で越えていく。かつての私は、本質的な成果のために「強い覚悟」を強いることが唯一の道だと信じてきました。しかし、真の変容は、孤独な闘いではなく、互いの変化を称賛しあえる土壌の中でこそ生まれます。<br><br>
@@ -488,25 +683,34 @@
             <h2 class="section-title">Services</h2>
             
             <div class="service-category">
-                <h3><i data-lucide="line-chart"></i> マーケティングコンサルティング</h3>
+                <h3><i data-lucide="line-chart"></i> <span>マーケティング<br class="sp-br">コンサルティング</span></h3>
                 <div class="service-grid">
                     <div class="service-card">
                         <h4>「成果」と「活力」を両立する、顧客起点のマーケティング実装</h4>
-                        <p>現場が顧客への貢献を実感し、自律的に動き出す。単なる戦略立案にとどまらず、組織の中に確かな手応えと「活力」が生まれるマーケティング構造を共に創り上げます。</p>
-                        <div class="feature-list">
-                            <div class="feature-item">
-                                <h5>1. 顧客起点の戦略デザイン（LTVの最大化）</h5>
-                                <p>独自の「勝てるシナリオ」を構築。新規獲得から顧客育成まで、各フェーズにおける満足度とLTVを最大化させる具体的な施策を設計します。</p>
-                            </div>
-                            <div class="feature-item">
-                                <h5>2. 経営と現場を繋ぐKPIの構造化（戦略の浸透）</h5>
-                                <p>抽象的な戦略を具体的なアクションへ翻訳。現場が迷いなく追える指標（顧客KPI・施策KPI）として落とし込み、組織全体の推進力を高めます。</p>
-                            </div>
-                            <div class="feature-item">
-                                <h5>3. 組織の自走を促す「対話型」支援（リテラシーの定着）</h5>
-                                <p>対話を重視したプロセスを構築。組織内のリテラシーを底上げし、自社の強みを活かした戦略を「自分たちの力」で実行・改善し続けられる状態へと導きます。</p>
+                        <div class="service-details">
+                            <div class="service-details-inner">
+                                <p>現場が顧客への貢献を実感し、自律的に動き出す。単なる戦略立案にとどまらず、組織の中に確かな手応えと「活力」が生まれるマーケティング構造を共に創り上げます。</p>
+                                <div class="feature-list">
+                                    <div class="feature-item">
+                                        <h5>1. 顧客起点の戦略デザイン（LTVの最大化）</h5>
+                                        <p>独自の「勝てるシナリオ」を構築。新規獲得から顧客育成まで、各フェーズにおける満足度とLTVを最大化させる具体的な施策を設計します。</p>
+                                    </div>
+                                    <div class="feature-item">
+                                        <h5>2. 経営と現場を繋ぐKPIの構造化（戦略の浸透）</h5>
+                                        <p>抽象的な戦略を具体的なアクションへ翻訳。現場が迷いなく追える指標（顧客KPI・施策KPI）として落とし込み、組織全体の推進力を高めます。</p>
+                                    </div>
+                                    <div class="feature-item">
+                                        <h5>3. 組織の自走を促す「対話型」支援（リテラシーの定着）</h5>
+                                        <p>対話を重視したプロセスを構築。組織内のリテラシーを底上げし、自社の強みを活かした戦略を「自分たちの力」で実行・改善し続けられる状態へと導きます。</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <button class="btn-more">
+                            <span class="text-more">続きを読む</span>
+                            <span class="text-close">閉じる</span>
+                            <i data-lucide="chevron-down"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -516,9 +720,18 @@
                 <div class="service-grid">
                     <div class="service-card">
                         <h4>Beyond the Correctness: 「願い」という新たな選択軸を。</h4>
-                        <p>正解のない時代において、世の中の「正しさ」だけを基準にすることは、自らの可能性を制限することかもしれません。</p>
-                        <p>自分の内側にある「願い」を選択肢に加える。その柔軟な視点が、眠っていた感性を呼び覚まし、能力の「新しい使い方」をデザインします。既成の枠に収まるのではなく、自身のリソースを自由に采配し、理想の未来を自ら構築していく。私たちが目指すのは、そんな「自己の可能性を広げ続ける」コーチングです。</p>
-                        <p><strong>体験セッション(１時間)：無料</strong></p>
+                        <div class="service-details">
+                            <div class="service-details-inner">
+                                <p>正解のない時代において、世の中の「正しさ」だけを基準にすることは、自らの可能性を制限することかもしれません。</p>
+                                <p>自分の内側にある「願い」を選択肢に加える。その柔軟な視点が、眠っていた感性を呼び覚まし、能力の「新しい使い方」をデザインします。既成の枠に収まるのではなく、自身のリソースを自由に采配し、理想の未来を自ら構築していく。私たちが目指すのは、そんな「自己の可能性を広げ続ける」コーチングです。</p>
+                                <p><strong>体験セッション(１時間)：無料</strong></p>
+                            </div>
+                        </div>
+                        <button class="btn-more">
+                            <span class="text-more">続きを読む</span>
+                            <span class="text-close">閉じる</span>
+                            <i data-lucide="chevron-down"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -528,8 +741,17 @@
                 <div class="service-grid">
                     <div class="service-card">
                         <h4>「正解」を追う組織から、「価値」を創り続ける集団へ</h4>
-                        <p>変化の激しい時代、外部環境に合わせただけの戦略はすぐに形骸化します。今、組織に必要なのは、確かな勝算を裏付ける「論理的アプローチ」と、メンバーが心の底から動きたくなる「内発的な動機」の融合です。</p>
-                        <p>コンサルティングによって市場の機微を捉えた「勝てる地図」を描き、コーチングによって組織の「ありたい姿」を明確にする。この二つが重なったとき、義務感（Have to）ではない、自発的な共創（Want to）が動き出します。既存の枠組みを超え、関わる全員の知恵と感性が混ざり合う、創造的な組織文化を実装していきます。</p>
+                        <div class="service-details">
+                            <div class="service-details-inner">
+                                <p>変化の激しい時代、外部環境に合わせただけの戦略はすぐに形骸化します。今、組織に必要なのは、確かな勝算を裏付ける「論理的アプローチ」と、メンバーが心の底から動きたくなる「内発的な動機」の融合です。</p>
+                                <p>コンサルティングによって市場の機微を捉えた「勝てる地図」を描き、コーチングによって組織の「ありたい姿」を明確にする。この二つが重なったとき、義務感（Have to）ではない、自発的な共創（Want to）が動き出します。既存の枠組みを超え、関わる全員の知恵と感性が混ざり合う、創造的な組織文化を実装していきます。</p>
+                            </div>
+                        </div>
+                        <button class="btn-more">
+                            <span class="text-more">続きを読む</span>
+                            <span class="text-close">閉じる</span>
+                            <i data-lucide="chevron-down"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -662,12 +884,11 @@
         <div class="container">
             <div class="omamori">
                 <i data-lucide="shield-check" size="48"></i>
-                <h3 class="font-serif" style="font-size: 1.5rem; margin-bottom: 20px;">
-                    ビジネスの戦略に、人を動かす活力を。<br>
-                    迷いが生じたとき、いつでも思考を整えにいらしてください。
+                <h3 class="font-serif footer-msg-title">
+                    ビジネスの戦略に、人を動かす<span class="keep-together">活力を。</span><br>
                 </h3>
-                <p style="margin-bottom: 40px; color: var(--text-sub); max-width: 700px; margin-left: auto; margin-right: auto;">
-                    ここは、あなたの「想い」を整理し、確かな「次の一歩」へと変える場所です。
+                <p class="footer-msg-desc">
+                    迷いが生じたとき、いつでも思考を整えにいらしてください。ここは、あなたの「想い」を整理し、確かな「次の一歩」へと変える場所です。
                 </p>
                 <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn">お問い合わせはこちら</a>
                 <p style="margin-top: 80px; font-size: 0.75rem; opacity: 0.5;">&copy; 2026 FreeQues Co., Ltd. All Rights Reserved.</p>
@@ -719,6 +940,7 @@
                 });
             });
 
+            // FAQ Accordion
             document.querySelectorAll('.faq-question').forEach(button => {
                 button.addEventListener('click', () => {
                     const faqAnswer = button.nextElementSibling;
@@ -732,6 +954,74 @@
                     }
                 });
             });
+
+            // Services Accordion (Mobile Only) - Pure CSS class toggle
+            document.querySelectorAll('.btn-more').forEach(button => {
+                button.addEventListener('click', () => {
+                    const details = button.previousElementSibling;
+                    button.classList.toggle('active');
+                    details.classList.toggle('is-open');
+                });
+            });
+
+            // スマホ用ハンバーガーメニューの開閉処理
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const links = document.querySelectorAll('.nav-links a');
+
+            if (hamburger) {
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('nav-active');
+                    hamburger.classList.toggle('toggle');
+                });
+            }
+            
+            // リンクをクリックした際にメニューを閉じる
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('nav-active')) {
+                        navLinks.classList.remove('nav-active');
+                        hamburger.classList.remove('toggle');
+                    }
+                });
+            });
+
+            // note RSS Fetch
+            const fetchNoteArticles = async () => {
+                const rssUrl = 'https://note.com/yukicho0330/rss';
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+                const noteGrid = document.querySelector('.note-grid');
+
+                try {
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+
+                    if (data.status === 'ok' && data.items.length > 0) {
+                        noteGrid.innerHTML = ''; // ダミー記事をクリア
+                        const latestItems = data.items.slice(0, 3); // 最新3件を取得
+
+                        latestItems.forEach(item => {
+                            // 日付のフォーマット (YYYY.MM.DD)
+                            const pubDate = new Date(item.pubDate);
+                            const formattedDate = `${pubDate.getFullYear()}.${String(pubDate.getMonth() + 1).padStart(2, '0')}.${String(pubDate.getDate()).padStart(2, '0')}`;
+                            
+                            const cardHTML = `
+                                <a href="${item.link}" target="_blank" class="note-card">
+                                    <div class="note-content">
+                                        <span class="date">${formattedDate}</span>
+                                        <h4>${item.title}</h4>
+                                    </div>
+                                </a>
+                            `;
+                            noteGrid.insertAdjacentHTML('beforeend', cardHTML);
+                        });
+                    }
+                } catch (error) {
+                    console.error('noteの記事取得に失敗しました:', error);
+                }
+            };
+
+            fetchNoteArticles();
         });
     </script>
 </body>
