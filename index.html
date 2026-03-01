@@ -104,7 +104,7 @@
             left: 0;
             width: 100%;
             z-index: 9999;
-            padding: 25px 0;
+            padding: 15px 0; 
             transition: var(--transition);
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -113,7 +113,7 @@
         }
 
         header.scrolled {
-            padding: 15px 0;
+            padding: 10px 0;
             box-shadow: 0 4px 30px rgba(0,0,0,0.08);
         }
 
@@ -124,21 +124,25 @@
         }
 
         .logo {
-            display: block;
-            width: 150px;
-            height: 40px;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            height: 60px; 
+            width: 220px;  
             text-decoration: none;
+            overflow: visible;
         }
 
         .logo img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 240%; /* 画像の余白を飛ばして文字のみを表示するために拡大 */
-            transform: translate(-50%, -50%);
-            mix-blend-mode: multiply; /* 白背景を透過 */
+            height: 100%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply; 
+            image-rendering: -webkit-optimize-contrast; 
+        }
+
+        header.scrolled .logo {
+            height: 55px;
         }
 
         .nav-links {
@@ -215,16 +219,17 @@
 
         .concept-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 100px;
+            grid-template-columns: 1fr;
+            gap: 60px;
             align-items: center;
         }
 
         .concept-image {
             width: 100%;
-            aspect-ratio: 1/1;
+            max-width: 800px;
+            margin: 0 auto;
+            aspect-ratio: 16/9;
             background: var(--bg-light);
-            border-radius: 0 150px 0 150px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -241,6 +246,36 @@
         }
 
         /* --- Services --- */
+        .services {
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(242, 246, 249, 0.92); /* 視認性を保つための透過背景 */
+            z-index: 1;
+        }
+
+        .services .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* サービス内容のタイトル文字を見やすくするための白シャドウ追加 */
+        .services .section-title,
+        .services .service-category h3 {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 1);
+        }
+
         .service-category {
             margin-bottom: 120px;
         }
@@ -328,6 +363,37 @@
             font-size: 0.95rem;
             line-height: 2;
             color: rgba(255,255,255,0.9);
+        }
+
+        /* --- Company --- */
+        .company {
+            background-color: var(--bg-light);
+        }
+
+        .company-table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .company-table th, .company-table td {
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.8;
+        }
+
+        .company-table th {
+            width: 25%;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .company-table tr:first-child th,
+        .company-table tr:first-child td {
+            border-top: 1px solid var(--border-color);
         }
 
         /* --- Note Section --- */
@@ -454,7 +520,6 @@
             display: inline-block;
         }
         
-        /* 今回追加したPC非表示用の改行クラス */
         .sp-br {
             display: none;
         }
@@ -486,6 +551,34 @@
         }
 
         @media (max-width: 768px) {
+            header { padding: 10px 0; }
+            .logo {
+                height: 50px; 
+                width: 180px;
+            }
+            header.scrolled .logo {
+                height: 45px;
+            }
+
+            .hero { padding-top: 0; }
+            .hero-content {
+                text-align: left;
+                width: 100%;
+                margin-top: 60px; /* 中央へ寄せるための調整 */
+            }
+            .hero h1 { 
+                font-size: 1.8rem; 
+                font-weight: 700; /* 太字 */
+            }
+            .hero h1 span { white-space: normal; }
+            .hero-line {
+                margin: 30px 0; /* 左揃え */
+                transform-origin: left;
+            }
+            .hero p {
+                text-align: left; /* 左揃え */
+            }
+
             .service-details {
                 max-height: 120px;
                 overflow: hidden;
@@ -493,7 +586,7 @@
                 position: relative;
             }
             .service-details.is-open {
-                max-height: 2000px; /* 十分な高さを確保して確実に開くように修正 */
+                max-height: 2000px;
             }
             .service-details::after {
                 content: "";
@@ -508,10 +601,6 @@
             }
             .service-details.is-open::after {
                 opacity: 0;
-            }
-            .service-details-inner {
-                padding-top: 15px;
-                padding-bottom: 20px;
             }
             .btn-more {
                 display: flex;
@@ -530,54 +619,16 @@
                 font-family: 'Noto Sans JP', sans-serif;
                 font-weight: 600;
             }
-            .btn-more:hover {
-                opacity: 0.7;
-            }
-            .btn-more .text-close {
-                display: none;
-            }
-            .btn-more.active .text-more {
-                display: none;
-            }
-            .btn-more.active .text-close {
-                display: inline;
-            }
-            .btn-more i {
-                transition: transform 0.3s;
-            }
-            .btn-more.active i {
-                transform: rotate(180deg);
-            }
+            .btn-more .text-close { display: none; }
+            .btn-more.active .text-more { display: none; }
+            .btn-more.active .text-close { display: inline; }
+            .btn-more.active i { transform: rotate(180deg); }
 
-            /* -------------------------------------
-               スマホ専用の修正（ご要望部分）
-               ------------------------------------- */
+            .sp-br { display: inline; }
+            .sp-keep { display: inline-block; }
+            .concept-text blockquote { font-size: 1.15rem; }
 
-            /* スマホ時のみ有効になる改行と折り返し防止 */
-            .sp-br {
-                display: inline;
-            }
-            .sp-keep {
-                display: inline-block;
-            }
-
-            /* Aboutの泣き別れ防止のために文字サイズを少し調整 */
-            .concept-text blockquote {
-                font-size: 1.15rem;
-            }
-
-            /* ②ヒーローエリアの見切れ調整 */
-            .hero h1 {
-                font-size: 1.5rem; /* スマホサイズに合わせて縮小 */
-            }
-            .hero h1 span {
-                white-space: normal; /* 見切れないように自動改行を許可 */
-            }
-
-            /* ③ヘッダーのハンバーガーメニュー化 */
-            .hamburger {
-                display: flex;
-            }
+            .hamburger { display: flex; }
             .nav-links {
                 position: fixed;
                 top: 0;
@@ -592,27 +643,31 @@
                 transition: right 0.3s ease-in-out;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.05);
             }
-            .nav-links.nav-active {
-                right: 0;
+            .nav-links.nav-active { right: 0; }
+            .hamburger.toggle span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.toggle span:nth-child(2) { opacity: 0; }
+            .hamburger.toggle span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .company-table th, .company-table td {
+                display: block;
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0;
             }
-            /* ハンバーガーアイコンのアニメーション */
-            .hamburger.toggle span:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
+            .company-table th {
+                padding-bottom: 5px;
+                border-bottom: none;
             }
-            .hamburger.toggle span:nth-child(2) {
-                opacity: 0;
+            .company-table td {
+                padding-top: 0;
+                padding-bottom: 25px;
             }
-            .hamburger.toggle span:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
+            .company-table tr:first-child td {
+                border-top: none;
             }
 
-            /* ①フッター文章の左揃えと「のを。」泣き別れ調整 */
-            .footer-msg-title, .footer-msg-desc {
-                text-align: left;
-            }
-            .footer-msg-title {
-                font-size: 1.25rem;
-            }
+            .footer-msg-title, .footer-msg-desc { text-align: left; }
+            .footer-msg-title { font-size: 1.25rem; }
         }
     </style>
 </head>
@@ -622,7 +677,7 @@
         <div class="container">
             <nav>
                 <a href="#" class="logo">
-                    <img src="logo.png" alt="FreeQues">
+                    <img src="Weblogo.png" alt="FreeQues">
                 </a>
                 <button class="hamburger" aria-label="メニュー">
                     <span></span>
@@ -630,11 +685,12 @@
                     <span></span>
                 </button>
                 <div class="nav-links">
-                    <a href="#concept">About</a>
-                    <a href="#services">Services</a>
-                    <a href="#profile">Profile</a>
-                    <a href="#note">Insights</a>
-                    <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn btn-contact">Contact</a>
+                    <a href="#concept">FreeQuesとは</a>
+                    <a href="#services">サービス内容</a>
+                    <a href="#profile">代表者プロフィール</a>
+                    <a href="#company">会社概要</a>
+                    <a href="#note">ブログ</a>
+                    <a href="https://forms.gle/Nf6t3nnhwNjR8GLU9" target="_blank" rel="noopener noreferrer" class="btn btn-contact">お問い合わせ</a>
                 </div>
             </nav>
         </div>
@@ -644,13 +700,13 @@
         <div class="container">
             <div class="hero-content">
                 <h1>
-                    <span>すべての人が自分の内にある、</span><br>
-                    <span>無限の可能性や選択肢に気づく。</span>
+                    <span>「熱」あるものを</span><br>
+                    <span>「熱」ある人に届ける</span>
                 </h1>
                 <div class="hero-line"></div>
                 <p>
-                    戦略に「熱」を、組織に「自由」を。<br>
-                    経営の限界を遊び心で突破し、<br class="sp-br">固有の価値を最大化する。
+                    顧客視点のマーケティングとコーチングで、戦略に「熱」を、組織に「自由」を。<br>
+                    気づきを起点に内発的動機を呼び起こし、<br class="sp-br">固有の価値を最大化する。
                 </p>
             </div>
         </div>
@@ -659,19 +715,18 @@
     <section class="concept" id="concept">
         <div class="container">
             <div class="concept-grid">
-                <div class="concept-image">
-                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000" alt="無限の可能性が生まれるイメージ" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
                 <div class="concept-text">
-                    <h2 class="section-title">about US</h2>
+                    <h2 class="section-title">FreeQuesとは</h2>
                     <blockquote>
-                        <span class="sp-keep">一見, 風変わり（Freak）な選択が,</span><br>
-                        <span class="sp-keep">未来の自由（Free）と</span><br>
-                        <span class="sp-keep">固有性（Unique）を切り拓く。</span>
+                        <span class="sp-keep">世の中の正解より、自分の信念を。</span><br>
+                        <span class="sp-keep">風変わり(Freak)から生まれる、</span><br>
+                        <span class="sp-keep">自由(Free)でユニーク(Unique)な未来へ。</span>
                     </blockquote>
                     <p>
-                        「ここが限界だ」と思い込んでいる境界線を、遊び心すら感じるような「軽やかさ」で越えていく。かつての私は、本質的な成果のために「強い覚悟」を強いることが唯一の道だと信じてきました。しかし、真の変容は、孤独な闘いではなく、互いの変化を称賛しあえる土壌の中でこそ生まれます。<br><br>
-                        FreeQuesは、培ってきた戦略的な「厳しさ」と、新たに手にした「しなやかさ」を統合。あなたが自分の中にある無限の可能性に気づき、コーチングを「生き方の指針」として深く人生に根付かせるための、共創型パートナーです。
+                        「ここが限界だ」と思い込んでいる境界線を、遊び心すら感じるような「軽やかさ」で越えていく。<br><br>
+                        かつての私は、結果を出すためには、自身も周囲もすり減らしていくような「強い覚悟」を強いるしかないと信じてきました。 しかし、事業者側の都合でどれほど身を削ったとしても、それは決して「本質的な成果」には繋がっていなかったのです。<br><br>
+                        ビジネスの原点である「顧客視点」へと視座を移すことで、私たちが本当に提供したかった価値への気づきが生まれます。さらに、その活力を一時的なもので終わらせないためには、一人ひとりが本来を持っていた事業への「熱」を呼び起こし、内発的な動機で動く土壌が不可欠です。<br><br>
+                        FreeQuesは、ビジネスを本来の姿へと導くマーケティングの「確かな視座」と、対話を通じて個人の想いを引き出すコーチングの「しなやかさ」を統合した共創型パートナーです。単なる事業拡大ではなく、あなた自身の理念を実現し、活力あふれる創造活動を続ける「自走する組織（人）」の実現を共に目指します。
                     </p>
                 </div>
             </div>
@@ -680,7 +735,7 @@
 
     <section class="services" id="services">
         <div class="container">
-            <h2 class="section-title">Services</h2>
+            <h2 class="section-title">サービス内容</h2>
             
             <div class="service-category">
                 <h3><i data-lucide="line-chart"></i> <span>マーケティング<br class="sp-br">コンサルティング</span></h3>
@@ -760,7 +815,7 @@
 
     <section class="profile" id="profile">
         <div class="container">
-            <h2 class="section-title" style="color:#fff;">Profile</h2>
+            <h2 class="section-title" style="color:#fff;">代表者プロフィール</h2>
             <div class="profile-grid" style="grid-template-columns: 1fr;">
                 <div class="profile-bio">
                     <h3 style="color:#fff; margin-bottom: 30px; font-size: 1.8rem;">代表取締役 長 勇樹</h3>
@@ -781,9 +836,54 @@
         </div>
     </section>
 
+    <section class="company" id="company">
+        <div class="container">
+            <h2 class="section-title">会社概要</h2>
+            <table class="company-table">
+                <tbody>
+                    <tr>
+                        <th>会社名</th>
+                        <td>株式会社FreeQues（フリークス）</td>
+                    </tr>
+                    <tr>
+                        <th>設立年</th>
+                        <td>2026年1月22日</td>
+                    </tr>
+                    <tr>
+                        <th>資本金</th>
+                        <td>1,000,000円</td>
+                    </tr>
+                    <tr>
+                        <th>所在地</th>
+                        <td>〒201-0012<br>東京都狛江市中和泉3-10-7</td>
+                    </tr>
+                    <tr>
+                        <th>代表者</th>
+                        <td>代表取締役社長 長 勇樹</td>
+                    </tr>
+                    <tr>
+                        <th>連絡先</th>
+                        <td><a href="mailto:info@freeques.com" style="color: var(--accent-green); text-decoration: none;">info@freeques.com</a></td>
+                    </tr>
+                    <tr>
+                        <th>事業内容</th>
+                        <td>
+                            顧客視点のマーケティング戦略コンサルティング<br>
+                            CRM支援<br>
+                            DX支援<br>
+                            マーケティング思考育成の教育事業<br>
+                            パーソナルコーチング<br>
+                            マーケティングとコーチングを融合した自走型組織開発
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <section class="note-section" id="note">
         <div class="container">
-            <h2 class="section-title">Insights from note</h2>
+            <h2 class="section-title">ブログ</h2>
             <div class="note-grid">
                 <a href="https://note.com/yukicho0330" target="_blank" class="note-card">
                     <div class="note-content">
@@ -914,7 +1014,6 @@
             window.addEventListener('scroll', handleHeader);
             handleHeader();
 
-            // Hero line scroll animation
             window.addEventListener('scroll', () => {
                 const line = document.querySelector('.hero-line');
                 const scroll = window.pageYOffset;
@@ -940,7 +1039,6 @@
                 });
             });
 
-            // FAQ Accordion
             document.querySelectorAll('.faq-question').forEach(button => {
                 button.addEventListener('click', () => {
                     const faqAnswer = button.nextElementSibling;
@@ -955,7 +1053,6 @@
                 });
             });
 
-            // Services Accordion (Mobile Only) - Pure CSS class toggle
             document.querySelectorAll('.btn-more').forEach(button => {
                 button.addEventListener('click', () => {
                     const details = button.previousElementSibling;
@@ -964,7 +1061,6 @@
                 });
             });
 
-            // スマホ用ハンバーガーメニューの開閉処理
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
             const links = document.querySelectorAll('.nav-links a');
@@ -976,7 +1072,6 @@
                 });
             }
             
-            // リンクをクリックした際にメニューを閉じる
             links.forEach(link => {
                 link.addEventListener('click', () => {
                     if (navLinks.classList.contains('nav-active')) {
@@ -986,7 +1081,6 @@
                 });
             });
 
-            // note RSS Fetch
             const fetchNoteArticles = async () => {
                 const rssUrl = 'https://note.com/yukicho0330/rss';
                 const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
@@ -997,11 +1091,10 @@
                     const data = await response.json();
 
                     if (data.status === 'ok' && data.items.length > 0) {
-                        noteGrid.innerHTML = ''; // ダミー記事をクリア
-                        const latestItems = data.items.slice(0, 3); // 最新3件を取得
+                        noteGrid.innerHTML = '';
+                        const latestItems = data.items.slice(0, 3);
 
                         latestItems.forEach(item => {
-                            // 日付のフォーマット (YYYY.MM.DD)
                             const pubDate = new Date(item.pubDate);
                             const formattedDate = `${pubDate.getFullYear()}.${String(pubDate.getMonth() + 1).padStart(2, '0')}.${String(pubDate.getDate()).padStart(2, '0')}`;
                             
